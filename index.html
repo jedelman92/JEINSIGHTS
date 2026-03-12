@@ -1,100 +1,673 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>JE Insights</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{
-font-family:Arial, Helvetica, sans-serif;
-margin:0;
-background:#f8fafc;
-color:#0f172a;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JE Insights</title>
+  <meta name="description" content="JE Insights helps founders, operators, and investors make better decisions with research, strategy, and market intelligence." />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --brand: #0f172a;
+      --brand-2: #1e293b;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+      --max: 1120px;
+    }
 
-header{
-background:#0f172a;
-color:white;
-padding:20px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container{
-max-width:1000px;
-margin:auto;
-padding:40px 20px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-h1{
-font-size:48px;
-margin-bottom:10px;
-}
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 25%),
+        radial-gradient(circle at left center, rgba(15, 23, 42, 0.05), transparent 20%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-h2{
-margin-top:60px;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.card{
-background:white;
-padding:20px;
-border-radius:12px;
-margin-top:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.05);
-}
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
-footer{
-text-align:center;
-padding:30px;
-margin-top:40px;
-font-size:14px;
-color:#64748b;
-}
-</style>
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 250, 252, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-copy small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 84px 0 64px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .hero h1 {
+      margin: 18px 0 18px;
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      max-width: 760px;
+    }
+
+    .hero p.lead {
+      margin: 0;
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .hero-stats {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 580px;
+    }
+
+    .stat {
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-card-wrap {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-dark {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      border: none;
+    }
+
+    .card h3, .card h4 {
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .mini-item {
+      background: #f8fafc;
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+    }
+
+    .mini-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .mini-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 42px 0 28px;
+    }
+
+    .section-header {
+      max-width: 720px;
+      margin-bottom: 26px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 26px;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border: 1px solid #bfdbfe;
+      margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .service-card p {
+      font-size: 15px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 22px;
+    }
+
+    .pill-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pill {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      font-weight: 600;
+    }
+
+    .insight-card p.meta {
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .insight-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .cta {
+      margin: 56px 0 28px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box p {
+      color: #cbd5e1;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--text);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.24);
+      color: white;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.44);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0 40px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .split,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cta-box {
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(var(--max), calc(100% - 20px));
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero p.lead,
+      .section p {
+        font-size: 16px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#">
+        <div class="brand-mark">JE</div>
+        <div class="brand-copy">
+          <span>JE Insights</span>
+          <small>Research, strategy, and market intelligence</small>
+        </div>
+      </a>
 
-<header>
-<h2>JE Insights</h2>
-<p>Research, strategy, and market intelligence</p>
-</header>
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#insights">Insights</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-<div class="container">
+      <a class="btn btn-primary" href="#contact">Book a Call</a>
+    </div>
+  </header>
 
-<h1>Strategic research that turns uncertainty into action.</h1>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Trusted insights for sharper decisions</div>
+          <h1>Strategic research that turns uncertainty into action.</h1>
+          <p class="lead">
+            JE Insights helps founders, operators, and investors make better decisions with
+            clear analysis, market intelligence, and practical recommendations.
+          </p>
 
-<p>
-JE Insights helps founders, operators, and investors make better decisions
-with clear analysis, market intelligence, and practical recommendations.
-</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Get Started</a>
+            <a class="btn btn-secondary" href="#services">Explore Services</a>
+          </div>
 
-<h2>Services</h2>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>50+</strong>
+              <span>Research briefs</span>
+            </div>
+            <div class="stat">
+              <strong>10x</strong>
+              <span>Faster synthesis</span>
+            </div>
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>Decision support</span>
+            </div>
+          </div>
+        </div>
 
-<div class="card">
-<b>Research Sprints</b>
-<p>Rapid analysis on a focused market or strategic question.</p>
-</div>
+        <div class="hero-card-wrap">
+          <div class="card">
+            <h4>What we deliver</h4>
+            <div class="mini-list">
+              <div class="mini-item">
+                <strong>Market Research</strong>
+                <span>Landscape scans, customer signals, and competitor analysis.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Strategy Support</strong>
+                <span>Focused recommendations you can actually use.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Insight Reports</strong>
+                <span>Clear, executive-ready summaries for teams and investors.</span>
+              </div>
+            </div>
+          </div>
 
-<div class="card">
-<b>Competitive Intelligence</b>
-<p>Understand competitors, positioning shifts, and emerging threats.</p>
-</div>
+          <div class="card card-dark">
+            <h3>From raw information to executive clarity.</h3>
+            <p>
+              Ideal for startups, operators, solo founders, and small teams that need sharp thinking
+              without a full in-house research function.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-<b>Strategic Advisory</b>
-<p>Clear recommendations for growth, product, and go-to-market strategy.</p>
-</div>
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Services</div>
+          <h2>Flexible support for research and strategy.</h2>
+          <p>
+            Choose a one-time project, an ongoing insight retainer, or a custom engagement built around your goals.
+          </p>
+        </div>
 
-<h2>Contact</h2>
+        <div class="grid-3">
+          <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Research Sprints</h3>
+            <p>Rapid analysis on a focused question, market, or customer segment.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Competitive Intelligence</h3>
+            <p>Track competitors, positioning shifts, launches, and market movement.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Strategic Advisory</h3>
+            <p>Structured support for decisions on growth, product, and go-to-market.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-Email: <a href="mailto:josef@jeinsights.com">josef@jeinsights.com</a>
-</div>
+    <section class="section" id="about">
+      <div class="container split">
+        <div>
+          <div class="section-label">About</div>
+          <h2>A boutique insights partner for modern businesses.</h2>
+          <p>
+            JE Insights combines structured research, critical thinking, and concise communication to help clients
+            see what matters, faster.
+          </p>
+          <p style="margin-top: 14px;">
+            Whether you are exploring a new opportunity, pressure-testing a strategy, or gathering intelligence before
+            a major move, we help you move with confidence.
+          </p>
+        </div>
 
-</div>
+        <div class="pill-list">
+          <div class="pill">Clear, no-fluff analysis</div>
+          <div class="pill">Fast turnaround for urgent questions</div>
+          <div class="pill">Executive-ready outputs</div>
+          <div class="pill">Custom support for each engagement</div>
+        </div>
+      </div>
+    </section>
 
-<footer>
-© 2026 JE Insights
-</footer>
+    <section class="section" id="insights">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Insights</div>
+          <h2>Recent thinking and analysis.</h2>
+          <p>High-signal perspectives designed for busy founders and operators.</p>
+        </div>
 
+        <div class="grid-3">
+          <div class="service-card insight-card">
+            <p class="meta">Insight 01</p>
+            <h3>How founders can validate markets faster</h3>
+            <p>A concise framework for testing demand before overcommitting resources.</p>
+          </div>
+          <div class="service-card insight-card">
+            <p class="meta">Insight 02</p>
+            <h3>What competitive signals actually matter</h3>
+            <p>How to distinguish noise from the indicators that affect strategic direction.</p>
+          </div>
+          <div class="service-card insight-card">
+            <p class="meta">Insight 03</p>
+            <h3>Using research to improve GTM decisions</h3>
+            <p>Practical ways to make market intelligence useful for execution, not just reporting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="cta-box">
+          <div class="section-label" style="color:#93c5fd;">Contact</div>
+          <h2 style="margin-top:0;">Let’s build your next decision with better insight.</h2>
+          <p>
+            Reach out to discuss a project, ask a question, or request a custom research engagement for your business.
+          </p>
+
+          <div class="cta-actions">
+            <a class="btn btn-light" href="mailto:josef@jeinsights.com">josef@jeinsights.com</a>
+            <a class="btn btn-ghost" href="mailto:josef@jeinsights.com?subject=Project%20Inquiry">Start a Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 JE Insights. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
